@@ -3,8 +3,9 @@ set -e
 
 echo "[1/8] Detectando partições EFI e Btrfs..."
 
-EFI_PART=$(lsblk -pn -o NAME,FSTYPE | grep vfat | awk '{print $1}' | head -n1)
-ROOT_PART=$(lsblk -pn -o NAME,FSTYPE | grep btrfs | awk '{print $1}' | head -n1)
+# Detecta partição EFI e raiz Btrfs
+EFI_PART=$(blkid | grep "vfat" | cut -d: -f1 | head -n1)
+ROOT_PART=$(blkid | grep "btrfs" | cut -d: -f1 | head -n1)
 
 OLDROOT="/mnt/oldroot"
 NEWROOT="/mnt/newroot"
